@@ -1,0 +1,164 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VibeAI — mídia com inteligência</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0b12;
+      --card: #151520;
+      --muted: #aaa9ba;
+      --purple: #9d72ff;
+      --pink: #ff68bd;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px;
+      font-family: system-ui, sans-serif;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at 80% 0%, #31204c 0, transparent 38%),
+        var(--bg);
+    }
+
+    main { width: min(720px, 100%); margin: 50px auto; }
+
+    .brand { color: var(--purple); font-weight: 800; letter-spacing: 1px; }
+    h1 { margin: 14px 0 8px; font-size: clamp(2rem, 7vw, 3.4rem); }
+    h1 span {
+      background: linear-gradient(90deg, var(--purple), var(--pink));
+      color: transparent;
+      background-clip: text;
+    }
+
+    .intro { color: var(--muted); line-height: 1.6; }
+    .panel {
+      margin-top: 28px;
+      padding: clamp(20px, 5vw, 34px);
+      border: 1px solid #302b40;
+      border-radius: 22px;
+      background: #151520eF;
+      box-shadow: 0 18px 60px #0006;
+    }
+
+    label { display: block; margin-bottom: 9px; font-weight: 650; }
+    input, select {
+      width: 100%;
+      padding: 15px;
+      color: #fff;
+      background: #0e0e17;
+      border: 1px solid #383446;
+      border-radius: 12px;
+      font: inherit;
+    }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      border: 0;
+      border-radius: 12px;
+      color: #fff;
+      background: linear-gradient(100deg, #8055f5, #d84ead);
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    button:hover { filter: brightness(1.1); }
+    button:disabled { opacity: .65; cursor: wait; }
+    #resultado { min-height: 24px; margin-top: 18px; color: #d8caff; }
+    .note { margin-top: 22px; color: var(--muted); font-size: .85rem; line-height: 1.5; }
+
+    @media (max-width: 520px) {
+      body { padding: 16px; }
+      main { margin: 28px auto; }
+      .row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">✦ VIBEAI</div>
+    <h1>Sua mídia, <span>do seu jeito.</span></h1>
+    <p class="intro">
+      Uma experiência inteligente para organizar e preparar músicas e vídeos
+      disponíveis para download autorizado.
+    </p>
+
+    <section class="panel">
+      <form id="formulario">
+        <label for="link">Link do conteúdo</label>
+        <input id="link" type="url" placeholder="https://exemplo.com/meu-conteudo"
+               required>
+
+        <div class="row">
+          <div>
+            <label for="tipo">Formato</label>
+            <select id="tipo">
+              <option value="audio">Áudio (MP3)</option>
+              <option value="video">Vídeo (MP4)</option>
+            </select>
+          </div>
+          <div>
+            <label for="qualidade">Qualidade</label>
+            <select id="qualidade">
+              <option>Recomendada</option>
+              <option>Economia de dados</option>
+              <option>Alta qualidade</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="botao" type="submit">✦ Analisar com IA</button>
+        <div id="resultado" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <p class="note">
+      Protótipo visual: a análise é demonstrativa. Para downloads reais, integre
+      um servidor e fontes que autorizem essa função. Respeite direitos autorais
+      e os termos de uso de cada serviço.
+    </p>
+  </main>
+
+  <script>
+    const form = document.querySelector("#formulario");
+    const botao = document.querySelector("#botao");
+    const resultado = document.querySelector("#resultado");
+
+    form.addEventListener("submit", (evento) => {
+      evento.preventDefault();
+
+      const link = document.querySelector("#link").value;
+      try {
+        const url = new URL(link);
+        if (!["http:", "https:"].includes(url.protocol)) throw new Error();
+      } catch {
+        resultado.textContent = "Digite um link válido começando com https://";
+        return;
+      }
+
+      botao.disabled = true;
+      botao.textContent = "✦ Analisando…";
+      resultado.textContent = "A IA está preparando uma análise demonstrativa…";
+
+      setTimeout(() => {
+        resultado.textContent =
+          "Link validado! Conecte uma API autorizada para analisar e baixar este conteúdo.";
+        botao.disabled = false;
+        botao.textContent = "✦ Analisar com IA";
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
+```
